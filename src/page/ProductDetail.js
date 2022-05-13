@@ -7,7 +7,7 @@ const ProductDetail = () => {
   console.log("usePrams가 가져오는 id란?",id)
   const [product, setProduct] = useState(null);
   const getProductDetail= async() => {
-    let url = `https://my-json-server.typicode.com/HyejinLee11/HnM-Clone/products?q=${searchQuery}`
+    let url = `https://my-json-server.typicode.com/HyejinLee11/HnM-Clone/products/${id}`
     let response = await fetch(url);
     let data = await response.json();
     console.log(data);
