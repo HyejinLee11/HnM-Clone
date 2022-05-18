@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import ProductCard from '../component/ProductCard';
 import { Container, Row, Col } from 'react-bootstrap';
 import { useSearchParams } from 'react-router-dom';
+import { productAction } from '../redux/actions/productAction'
+import { useDispatch, useSelector } from 'react-redux';
 
 const ProductAll = () => {
-  const [productList, setProductList] = useState([]);
+  const productList = useSelector(state => state.product.productList);
   const [query, setQuery] = useSearchParams();
-  const getProducts= async() => {
+  const dispatch = useDispatch();
+  const getProducts= () => {
     let searchQuery = query.get("q") || "";
     console.log("쿼리값은?", searchQuery)
-    let url = `https://my-json-server.typicode.com/HyejinLee11/HnM-Clone/products?q=${searchQuery}`
-    let response = await fetch(url);
-    let data = await response.json();
-    // console.log(data);
-    setProductList(data);
+    dispatch(productAction.getProducts(searchQuery))
+    // 빈손으로 가면 안되니까 서치 쿼리를 매개변수로 가져아함.
   };
 
   useEffect(()=>{

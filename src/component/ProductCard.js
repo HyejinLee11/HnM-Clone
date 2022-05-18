@@ -20,3 +20,5 @@ const ProductCard = ({item}) => {
 }
 
 export default ProductCard
+
+//예를 들어 이 카드가 All페이지나 장바구니에도 들어갈 수 있음.

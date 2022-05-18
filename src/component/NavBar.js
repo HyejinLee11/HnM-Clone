@@ -3,15 +3,22 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser } from '@fortawesome/free-regular-svg-icons'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { useNavigate } from 'react-router-dom'
+import { authenticateAction } from '../redux/actions/authenticateAction'
+import { useDispatch } from 'react-redux'
 
-const NavBar = () => {
+const NavBar = ({authenticate}) => {
   const menuList = ['여성', 'Divided', '남성', '신생아/유아', '아동', 'H&M Home', 'Sale', '지속가능성']
   const navigate = useNavigate()
+  const dispatch = useDispatch();
   const goToLogin = () => {
     navigate('/login')
   }
   const goToMain = () => {
     navigate('/')
+  }
+
+  const logOut = () => {
+    dispatch(authenticateAction.logout(authenticate))
   }
 
   const search = (e) => {
@@ -24,15 +31,21 @@ const NavBar = () => {
       navigate(`/?q=${keyword}`);
       // url이 바뀐다.
     }
-
   }
 
   return (
     <div>
-        <div className='login-button' onClick={goToLogin}>
-            <FontAwesomeIcon icon={faUser} />
-            <div>로그인</div>
-        </div>
+        {authenticate === false ?
+          <div className='login-button' onClick={goToLogin}>
+              <FontAwesomeIcon icon={faUser} />
+              <div>로그인</div>
+          </div>
+          : 
+          <div className='login-button' onClick={logOut}>
+          <FontAwesomeIcon icon={faUser} />
+          <div>로그아웃</div>
+      </div>
+        }
       <div className='nav-section' onClick={goToMain}>
         <img
           width={100}

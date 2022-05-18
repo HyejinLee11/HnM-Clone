@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import { Container, Row, Col } from 'react-bootstrap'
+import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
+import { productAction } from '../redux/actions/productAction'
 
 const ProductDetail = () => {
   let {id} = useParams()
   console.log("usePrams가 가져오는 id란?",id)
-  const [product, setProduct] = useState(null);
-  const getProductDetail= async() => {
-    let url = `https://my-json-server.typicode.com/HyejinLee11/HnM-Clone/products/${id}`
-    let response = await fetch(url);
-    let data = await response.json();
-    console.log(data);
-    setProduct(data);
+  // const [product, setProduct] = useState(null);
+  const product = useSelector(state => state.product.product);
+  const dispatch = useDispatch();
+  const getProductDetail= () => {
+    // console.log(data);
+    dispatch(productAction.getProductDetail(id))
+    // setProduct(data);
   }
 
   useEffect(()=>{
